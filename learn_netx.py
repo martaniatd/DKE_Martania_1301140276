@@ -23,8 +23,7 @@ def extract_person(document):
                 if chunk.label() == 'PERSON':
                     person.append(' '.join([c[0] for c in chunk]))
     return person
-
-
+	
 def extract_organizations(document):
     organizations = []
     sentences = ie_preprocess(document)
@@ -59,11 +58,15 @@ def draw_graph(graph, label):
 def main():
     entitas = []
     for i in range(1, 10):
-        file = open("artikelkyu/" + str(i) + ".txt", "r")
-        string = remove_non_ascii(file.read())
-        person = extract_person(string)
-        person = list(set(person))
-        entitas.append(person)
+		file = open("artikelku/" + str(i) + ".txt", "r")
+		string = remove_non_ascii(file.read())
+		person = extract_person(string)
+		organizations = extract_organizations(string)
+		person = list(set(person))
+		organizations = list(set(organizations))
+		entitas.extend([person,organizations])
+		print person
+		print organizations
     graph = []
     label = {}
     temp = {}
